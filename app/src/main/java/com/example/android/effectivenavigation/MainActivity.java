@@ -39,7 +39,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_section_launchpad);
+        setContentView(R.layout.activity_main);
 
         mAppSectionsPagerAdapter = new AppSectionsPagerAdapter(getSupportFragmentManager());
 
@@ -64,31 +64,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         for (int i = 0; i < mAppSectionsPagerAdapter.getCount(); i++) {
             actionBar.addTab(actionBar.newTab().setText(mAppSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
-        Progetto progetto = new Progetto();
-        Contatto contatto = new Contatto();
-        contatto.setCognome("Fort");
-        contatto.setNome("Alessandro");
-        contatto.setId(1);
-        contatto.setIdproprietario(1);
-        contatto.setNote("");
-        contatto.setRagioneSociale("ManageIt");
-        Progetto[] progetti = new Progetto[3];
-        for(int i=0;i<3;i++){
-            progetto.setTitolo("progetto"+i);
-            progetto.setStato("iniziato");
-            progetto.setCliente(contatto);
-            progetto.setNote("");
-            progetto.setId(1);
-            progetto.setData("2015-07-29");
-            progetto.setData_creazione("2015-07-28");
-            progetto.setId_cliente(1);
-            progetto.setId_proprietario(1);
-            progetti[i]=progetto;
-        }
-        ProgettiListViewAdapter adapter = new ProgettiListViewAdapter(this,progetti);
-        ListView listview = new ListView(this);
-        listview=(ListView) findViewById(R.id.lv_progetti);
-        listview.setAdapter(adapter);
+
     }
 
     @Override
@@ -114,7 +90,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new LaunchpadSectionFragment();
+                    return new ListaProgettiFragment();
 
                 default:
                     Fragment fragment = new DummySectionFragment();
@@ -163,4 +139,40 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return rootView;
         }
     }
+
+    public static class ListaProgettiFragment extends Fragment {
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIstanceState){
+            View view = inflater.inflate(R.layout.fragment_section_launchpad, container, false);
+            Progetto progetto = new Progetto();
+            Contatto contatto = new Contatto();
+            contatto.setCognome("Fort");
+            contatto.setNome("Alessandro");
+            contatto.setId(1);
+            contatto.setIdproprietario(1);
+            contatto.setNote("");
+            contatto.setRagioneSociale("ManageIt");
+            contatto.setTipo("persona");
+            Progetto[] progetti = new Progetto[3];
+            for(int i=0;i<3;i++){
+                progetto.setTitolo("progetto"+i);
+                progetto.setStato("iniziato");
+                progetto.setCliente(contatto);
+                progetto.setNote("");
+                progetto.setId(1);
+                progetto.setData("2015-07-29");
+                progetto.setData_creazione("2015-07-28");
+                progetto.setId_cliente(1);
+                progetto.setId_proprietario(1);
+                progetti[i]=progetto;
+            }
+            ProgettiListViewAdapter adapter = new ProgettiListViewAdapter(view.getContext(),progetti);
+            ((ListView) view.findViewById(R.id.lv_progetti)).setAdapter(adapter);
+            return view;
+        }
+    }
+
 }
