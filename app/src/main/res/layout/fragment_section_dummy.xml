@@ -14,10 +14,22 @@
   limitations under the License.
   -->
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:textSize="24sp"
-    android:padding="32dp" />
+    android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_attivita"
+            >
+
+        </ListView>
+
+    </LinearLayout>
+
+</FrameLayout>

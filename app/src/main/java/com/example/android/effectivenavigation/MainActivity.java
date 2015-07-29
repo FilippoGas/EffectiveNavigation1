@@ -93,11 +93,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                     return new ListaProgettiFragment();
 
                 default:
-                    Fragment fragment = new DummySectionFragment();
-                    Bundle args = new Bundle();
-                    args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-                    fragment.setArguments(args);
-                    return fragment;
+
+                    return new ListaAttivitaFragment();
             }
         }
 
@@ -114,29 +111,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             else{
                 return "Attività";
             }
-        }
-    }
-
-    public static class LaunchpadSectionFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_launchpad, container, false);
-
-            return rootView;
-        }
-    }
-
-    public static class DummySectionFragment extends Fragment {
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_section_dummy, container, false);
-            return rootView;
         }
     }
 
@@ -171,6 +145,41 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
             ProgettiListViewAdapter adapter = new ProgettiListViewAdapter(view.getContext(),progetti);
             ((ListView) view.findViewById(R.id.lv_progetti)).setAdapter(adapter);
+            return view;
+        }
+    }
+
+    public static class ListaAttivitaFragment extends Fragment {
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedIstanceState){
+            View view = inflater.inflate(R.layout.fragment_section_dummy, container, false);
+            Attivita attivita = new Attivita();
+            Contatto contatto = new Contatto();
+            contatto.setCognome("Fort");
+            contatto.setNome("Alessandro");
+            contatto.setId(1);
+            contatto.setIdproprietario(1);
+            contatto.setNote("");
+            contatto.setRagioneSociale("ManageIt");
+            contatto.setTipo("persona");
+            Attivita[] attivitas = new Attivita[3];
+            for(int i=0;i<3;i++){
+                attivita.setOggetto("attivita" + i);
+                attivita.setStato("iniziato");
+                attivita.setCliente(contatto);
+                attivita.setNote("");
+                attivita.setId(1);
+                attivita.setData("2015-07-29");
+                attivita.setData_creazione("2015-07-28");
+                attivita.setId_cliente(1);
+                attivita.setId_proprietario(1);
+                attivitas[i]=attivita;
+            }
+            AttivitaListViewAdapter adapter = new AttivitaListViewAdapter(view.getContext(),attivitas);
+            ((ListView) view.findViewById(R.id.lv_attivita)).setAdapter(adapter);
             return view;
         }
     }
